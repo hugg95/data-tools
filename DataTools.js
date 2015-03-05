@@ -12,11 +12,10 @@
 	};
 
 	var _flashState = false;
-	
 	var DataTools = function(config) {
 		this.config = $.extend(_config, config);
 	};
-	
+
 	// class name of export button
 	var CLASS_NAME = '.js-export-btn';
 
@@ -34,7 +33,7 @@
 	    }, 100);
 
     };
-    				
+
     var _initFlash = function(flashPath) {
     	var flash = $(EMBED_HTML).attr('src', flashPath);
     	$('body').append(flash);
@@ -72,7 +71,7 @@
 
 	$(CLASS_NAME).unbind('mouseover');
 	$(CLASS_NAME).unbind('click');
-	
+
 	$('body').on('mouseover', CLASS_NAME, function(e) {
 		_initButton(e.target.offsetLeft, e.target.offsetTop, e.target.clientWidth, e.target.clientHeight);
 	});
@@ -82,3 +81,4 @@
 	return DataTools;
 
 })(window, jQuery);
+
