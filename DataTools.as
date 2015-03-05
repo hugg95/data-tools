@@ -12,7 +12,7 @@ package {
 
     public class DataTools extends Sprite {
 
-    	private var fileName:String = '';
+    	private var fileName:String = 'download.txt';
         private var charset:String = 'utf-8';
         private var data:String = '';
         private var btn:Sprite;
@@ -29,11 +29,11 @@ package {
     	}
 
     	protected function loaded(e:Event):void {
-            notify();
         	register();
-            btn.addEventListener(MouseEvent.CLICK, save);
+            btn.addEventListener(MouseEvent.CLICK, _export);
             stage.addEventListener(Event.ACTIVATE, register);
             addChild(btn);
+            notify();
         }
 
         // notify javascript environment that flash has ready
@@ -42,18 +42,14 @@ package {
         }
 
         // save data into disk
-        public function save(event:Event):void {
+        public function _export(event:Event):void {
         	var fileReference:FileReference = new FileReference();
-            fileReference.addEventListener(Event.COMPLETE, saved);
+            //fileReference.addEventListener(Event.COMPLETE, saved);
             if (charset == 'utf-8') {
                 fileReference.save(saveAsUtf8(data), fileName);
             } else if (charset == 'utf-16') {
                 fileReference.save(saveAsUtf16(data), fileName);
             }
-        }
-
-        protected function saved():String {
-            return 'saved successfully';
         }
 
         protected function saveAsUtf8(str:String):ByteArray {
@@ -78,21 +74,22 @@ package {
         protected function register():void {
         	ExternalInterface.addCallback('setFileName', setFileName);
         	ExternalInterface.addCallback('setCharset', setCharset);
-        	ExternalInterface.addCallback('setStrData', setData);
+        	ExternalInterface.addCallback('setStrData', setStrData);
         }
 
         // set file name
-        public function setFileName(fileName:String):void {
-        	fileName = fileName;
+        public function setFileName(newFileName:String):void {
+        	fileName = newFileName;
         }
 
         // set charset
-        public function setCharset(charset:String):void {
-            charset = charset;
+        public function setCharset(newCharset:String):void {
+            charset = newCharset;
         }
 
-        public function setData(data:String):void {
-            data = data;
+        public function setStrData(newData:String):void {
+            data = newData;
         }
     }
 }
+
