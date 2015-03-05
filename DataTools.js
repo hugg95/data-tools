@@ -11,6 +11,8 @@
 		flashPath: ''
 	};
 
+    // _flashState is false by default,
+    // its value will be set to true after flash ready
 	var _flashState = false;
 	var DataTools = function(config) {
 		this.config = $.extend(_config, config);
@@ -56,7 +58,7 @@
         _flashState = true;
     };
 
-    // check whether the flash has ready
+    // check whether the flash ready
     var _checkState = function(id) {
 
         if (_flashState) {
