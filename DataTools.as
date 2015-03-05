@@ -54,6 +54,11 @@ package {
 
         protected function saveAsUtf8(str:String):ByteArray {
             var bytes:ByteArray = new ByteArray();
+            // add BOM
+            bytes.writeByte(0xEF);
+            bytes.writeByte(0xBB);
+            bytes.writeByte(0xBF);
+
             bytes.writeUTFBytes(str);
 
             return bytes;
@@ -61,6 +66,8 @@ package {
 
         protected function saveAsUtf16(str:String):ByteArray {
             var bytes:ByteArray = new ByteArray();
+            bytes.writeByte(0xFF);
+            bytes.writeByte(0xFE);
             for (var i:int = 0; i < str.length; i++) {
                 var code:int = str.charCodeAt(i);
                 if (code < 0XFF) {
@@ -74,7 +81,7 @@ package {
         protected function register():void {
         	ExternalInterface.addCallback('setFileName', setFileName);
         	ExternalInterface.addCallback('setCharset', setCharset);
-        	ExternalInterface.addCallback('setStrData', setData);
+        	ExternalInterface.addCallback('setStrData', setStrData);
         }
 
         // set file name
@@ -87,7 +94,7 @@ package {
             charset = newCharset;
         }
 
-        public function setData(newData:String):void {
+        public function setStrData(newData:String):void {
             data = newData;
         }
     }
