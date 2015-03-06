@@ -21,7 +21,7 @@
 	// class name of export button
 	var CLASS_NAME = '.js-export-btn';
 
-	var EMBED_HTML = '<embed width="0" height="0" quality="high" bgcolor="#ffffff"' 
+	var EMBED_HTML = '<embed width="0" height="0" quality="high" bgcolor="#ffffff" '
 					+ 'name="fs-data-tools" id="fs-data-tools" wmode="transparent" '
     				+ 'allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" '
     				+ 'pluginspage="http://www.macromedia.com/go/getflashplayer" />';
