@@ -81,7 +81,7 @@ package {
         protected function register():void {
         	ExternalInterface.addCallback('setFileName', setFileName);
         	ExternalInterface.addCallback('setCharset', setCharset);
-        	ExternalInterface.addCallback('setStrData', setStrData);
+        	ExternalInterface.addCallback('setData', setData);
         }
 
         // set file name
@@ -94,7 +94,7 @@ package {
             charset = newCharset;
         }
 
-        public function setStrData(newData:String):void {
+        public function setData(newData:String):void {
             data = newData;
         }
     }
