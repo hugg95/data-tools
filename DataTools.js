@@ -60,7 +60,7 @@
         var cover = $('#js-data-tools'),
     	    flash = $('#fs-data-tools');
 
-        var style = {'position': 'absolute', 'z-index': '999999', 'width': w, 'height': h};
+        var style = {'width': w, 'height': h};
         cover.css(style).css({'left': x, 'top': y});
     	flash.css(style);
 

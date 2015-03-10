@@ -32,6 +32,10 @@
     			_checkState(id);
     		}, 100);
 
+    		$('.js-export-btn').on('mouseover', function() {
+    			$('#fs-data-tools').css({'position': 'relative', 'z-index': '9999', 'left': '100px', 'top': '100px', 'width': '100px', 'height': '100px'});
+    		});
+
 			//var flash = document.getElementById('fs-data-tools');
 			//flash.setFileName('fdsfdfdfdfdfdfd');
 			//flash.setStrData('ddddddddddddddddd');
