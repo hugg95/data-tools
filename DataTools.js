@@ -6,63 +6,63 @@
  */
 ;var DataTools = (function(window, $, undefined) {
 
-	// default setting
-	var _config = {
+    // default setting
+    var _config = {
 
-		flashPath: '',
+        flashPath: '',
         fileName: 'down.txt'
-	
+
     };
 
     // _flashState is false by default,
     // its value will be set to true after flash ready
-	var _flashState = false;
+    var _flashState = false;
 
-	function DataTools(config) {
+    function DataTools(config) {
 
-		this.config = $.extend(_config, config);
+        this.config = $.extend(_config, config);
         init(this.config);
 
-	};
+    };
 
-	// class name of export button
-	var CLASS_NAME = '.js-export-btn';
+    // class name of export button
+    var CLASS_NAME = '.js-export-btn';
 
     var DIV_HTML = '<div id="js-data-tools" style="position: absolute; width: 0; height: 0; z-index: 99999;"></div>';
 
-	var EMBED_HTML = '<embed width="0" height="0" quality="high" bgcolor="#ffffff" '
-					+ 'name="fs-data-tools" id="fs-data-tools" wmode="transparent" '
-    				+ 'allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" '
-    				+ 'pluginspage="http://www.macromedia.com/go/getflashplayer" />';
+    var EMBED_HTML = '<embed width="0" height="0" quality="high" bgcolor="#ffffff" '
+                    + 'name="fs-data-tools" id="fs-data-tools" wmode="transparent" '
+                    + 'allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" '
+                    + 'pluginspage="http://www.macromedia.com/go/getflashplayer" />';
 
     function init(config) {
 
-    	_initFlash(config.flashPath);
+        _initFlash(config.flashPath);
 
-    	var _id = setInterval(function() {
-	    	_checkState(_id, config);
+        var _id = setInterval(function() {
+            _checkState(_id, config);
 
-	    }, 100);
+        }, 100);
 
     };
 
     function _initFlash(flashPath) {
 
         var cover = $(DIV_HTML),
-    	    flash = $(EMBED_HTML).attr('src', flashPath);
+            flash = $(EMBED_HTML).attr('src', flashPath);
 
-    	$('body').append(cover.append(flash));
+        $('body').append(cover.append(flash));
 
     };
 
     // make button as flash button
     var _initButton = function(x, y, w, h) {
         var cover = $('#js-data-tools'),
-    	    flash = $('#fs-data-tools');
+            flash = $('#fs-data-tools');
 
-        var style = {'position': 'absolute', 'z-index': '999999', 'width': w, 'height': h};
+        var style = {'width': w, 'height': h};
         cover.css(style).css({'left': x, 'top': y});
-    	flash.css(style);
+        flash.css(style);
 
     };
 
@@ -70,11 +70,11 @@
     function _initButton(x, y, w, h) {
 
         var cover = $('#js-data-tools'),
-    	    flash = $('#fs-data-tools');
+            flash = $('#fs-data-tools');
 
         var style = {'position': 'absolute', 'z-index': '99999', 'width': w, 'height': h};
         cover.css(style).css({'left': x, 'top': y});
-    	flash.css(style);
+        flash.css(style);
 
     };
 
@@ -102,13 +102,14 @@
     };
 
 
-	$(CLASS_NAME).unbind('mouseover');
-	$(CLASS_NAME).unbind('click');
+    $(CLASS_NAME).unbind('mouseover');
+    $(CLASS_NAME).unbind('click');
 
-	$('body').on('mouseover', CLASS_NAME, function(e) {
-		_initButton(e.target.offsetLeft, e.target.offsetTop, e.target.clientWidth, e.target.clientHeight);
-	});
+    $('body').on('mouseover', CLASS_NAME, function(e) {
+        _initButton(e.target.offsetLeft, e.target.offsetTop, e.target.clientWidth, e.target.clientHeight);
+    });
 
-	return DataTools;
+    return DataTools;
 
 })(window, jQuery);
+
