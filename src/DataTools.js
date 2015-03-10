@@ -22,7 +22,7 @@
     function DataTools(config) {
 
         configure(config);
-        init(this.config);
+        init();
 
     };
 
@@ -36,12 +36,12 @@
                     + 'allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" '
                     + 'pluginspage="http://www.macromedia.com/go/getflashplayer" />';
 
-    function init(config) {
+    function init() {
 
-        _initFlash(config.flashPath);
+        _initFlash(this.config.flashPath);
 
         var _id = setInterval(function() {
-            _checkState(_id, config);
+            _checkState(_id);
 
         }, 100);
 
@@ -80,13 +80,13 @@
     };
 
     // check whether the flash ready
-    function _checkState(id, config) {
+    function _checkState(id) {
 
         if (_flashState) {
             var flash = document.getElementById('fs-data-tools');
 
-            flash.setFileName(config.fileName);
-            flash.setData(config.data);
+            flash.setFileName(this.config.fileName);
+            flash.setData(this.config.data);
             clearInterval(id);
         }
 
