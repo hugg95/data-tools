@@ -1,0 +1,26 @@
+{
+  "name": "DataTools",
+  "version": "1.0.0",
+  "description": "An utility functions collection in javascript",
+  "main": "src/DataTools.js",
+  "dependencies": {
+    "grunt": "^0.4.5"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-uglify": "^0.8.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lncwwn/data-tools.git"
+  },
+  "author": "victor.li",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lncwwn/data-tools/issues"
+  },
+  "homepage": "https://github.com/lncwwn/data-tools"
+}
