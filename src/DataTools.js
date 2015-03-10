@@ -21,7 +21,7 @@
 
     function DataTools(config) {
 
-        this.config = $.extend(_config, config);
+        config(config);
         init(this.config);
 
     };
@@ -45,6 +45,10 @@
 
         }, 100);
 
+    };
+
+    function config(config) {
+        this.config = $.extend(_config, config);
     };
 
     function _initFlash(flashPath) {
@@ -95,6 +99,8 @@
         var _tar = e.target;
         _initButton(_tar.offsetLeft, _tar.offsetTop, _tar.clientWidth, _tar.clientHeight);
     });
+
+    DataTools.prototype.config = config;
 
     return DataTools;
 
