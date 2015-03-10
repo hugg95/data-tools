@@ -8,18 +8,21 @@
 
 	// default setting
 	var _config = {
+
 		flashPath: '',
-        // the default download name
-        fileName: 'download.txt'
-	};
+        fileName: 'down.txt'
+	
+    };
 
     // _flashState is false by default,
     // its value will be set to true after flash ready
 	var _flashState = false;
 
-	var DataTools = function(config) {
+	function DataTools(config) {
+
 		this.config = $.extend(_config, config);
-        init(this.config);
+        //init(this.config);
+
 	};
 
 	// class name of export button
@@ -32,21 +35,24 @@
     				+ 'allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" '
     				+ 'pluginspage="http://www.macromedia.com/go/getflashplayer" />';
 
-    var init = function(config) {
+    function init(config) {
+
     	_initFlash(config.flashPath);
 
-    	var _checkStateId = setInterval(function() {
-    		console.log(_checkStateId);
-	    	_checkState(_checkStateId, config);
+    	var _id = setInterval(function() {
+	    	_checkState(_id, config);
+
 	    }, 100);
 
     };
 
-    var _initFlash = function(flashPath) {
+    function _initFlash(flashPath) {
+
         var cover = $(DIV_HTML),
     	    flash = $(EMBED_HTML).attr('src', flashPath);
 
     	$('body').append(cover.append(flash));
+
     };
 
     // make button as flash button
@@ -57,16 +63,33 @@
         var style = {'position': 'absolute', 'z-index': '999999', 'width': w, 'height': h};
         cover.css(style).css({'left': x, 'top': y});
     	flash.css(style);
+
+    };
+
+    // make button as flash button
+    function _initButton(x, y, w, h) {
+
+        var cover = $('#js-data-tools'),
+    	    flash = $('#fs-data-tools');
+
+        var style = {'position': 'absolute', 'z-index': '99999', 'width': w, 'height': h};
+        cover.css(style).css({'left': x, 'top': y});
+    	flash.css(style);
+
     };
 
     // for flash call
-    var setState = function() {
+    window.setState = function() {
+
+        console.log(_flashState);
         _flashState = true;
+        console.log(_flashState);
+
     };
     window.setState = setState;
 
     // check whether the flash ready
-    var _checkState = function(id, config) {
+    function _checkState(id, config) {
 
         if (_flashState) {
             //var flash = $('#fs-data-tools');
@@ -75,6 +98,7 @@
             flash.setData('dfddsdefdgfd,当计算机尝试读取,多个字节的时候,问题就出现gfdwgfdfd,dfdssfsd');
             clearInterval(id);
         }
+
     };
 
 
@@ -85,7 +109,8 @@
 		_initButton(e.target.offsetLeft, e.target.offsetTop, e.target.clientWidth, e.target.clientHeight);
 	});
 
+    DataTools.prototype.init = init;
+
 	return DataTools;
 
 })(window, jQuery);
-

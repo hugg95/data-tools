@@ -17,7 +17,7 @@ package {
         private var data:String = '';
         private var btn:Sprite;
 
-    	public function DataTools():void {
+    	public function DataTools() {
             stage.scaleMode = StageScaleMode.EXACT_FIT;
     		LoaderInfo(this.root.loaderInfo).addEventListener(Event.COMPLETE, loaded);
             btn = new Sprite();
@@ -36,7 +36,7 @@ package {
             notify();
         }
 
-        // notify javascript environment that flash has ready
+        // notify javascript environment that flash ready
         protected function notify():void {
             ExternalInterface.call('setState');
         }
@@ -81,7 +81,7 @@ package {
         protected function register():void {
         	ExternalInterface.addCallback('setFileName', setFileName);
         	ExternalInterface.addCallback('setCharset', setCharset);
-        	ExternalInterface.addCallback('setData', setData);
+            ExternalInterface.addCallback('setData', setData);
         }
 
         // set file name
@@ -97,6 +97,7 @@ package {
         public function setData(newData:String):void {
             data = newData;
         }
+
     }
 }
 

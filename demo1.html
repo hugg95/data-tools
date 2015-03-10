@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>demo</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<body>
+		<button class="js-export-btn">export</button>
+	</body>
+	<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
+	<!-- <script type="text/javascript" src="DataTools.js"></script> -->
+	<script>
+		//var d = new DataTools({flashPath: 'DataTools.swf', fileName: 'test.csv'});
+		var _flashState = false;
+		function setState() {
+			_flashState = true;
+		};
+
+		window.onload = function() {
+			var _checkState = function(id) {
+        		if (_flashState) {
+	            	//var flash = $('#fs-data-tools');
+	            	var flash = document.getElementById('fs-data-tools');
+	            	flash.setFileName('----------');
+	            	flash.setData('dfddsdefdgfd,当计算机尝试读取,多个字节的时候,问题就出现gfdwgfdfd,dfdssfsd');
+	            	clearInterval(id);
+        		};
+    		};
+
+    		var id = setInterval(function() {
+    			 console.log(id);
+    			_checkState(id);
+    		}, 100);
+
+			//var flash = document.getElementById('fs-data-tools');
+			//flash.setFileName('fdsfdfdfdfdfdfd');
+			//flash.setStrData('ddddddddddddddddd');
+		};
+	</script>
+	<embed src="DataTools.swf" width="100px" height="100px"
+	 quality="high" bgcolor="#ffffff" name="fs-data-tools" id="fs-data-tools"
+	  wmode="transparent" allowScriptAccess="always" allowFullScreen="false" 
+	  type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+</html>

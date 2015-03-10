@@ -6,10 +6,14 @@
 	</head>
 	<body>
 		<button class="js-export-btn">export</button>
+		<button class="js-export-btn">export1</button>
 	</body>
 	<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="DataTools.js"></script>
 	<script>
-		var d = new DataTools({flashPath: 'DataTools.swf', fileName: 'test.csv'});
+		//window.onload = function() {
+			var d = new DataTools({flashPath: 'DataTools.swf', fileName: 'test.csv'});
+			d.init(d.config);
+		//};
 	</script>
 </html>
