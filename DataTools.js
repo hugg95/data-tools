@@ -21,7 +21,7 @@
 	function DataTools(config) {
 
 		this.config = $.extend(_config, config);
-        //init(this.config);
+        init(this.config);
 
 	};
 
@@ -60,7 +60,7 @@
         var cover = $('#js-data-tools'),
     	    flash = $('#fs-data-tools');
 
-        var style = {'width': w, 'height': h};
+        var style = {'position': 'absolute', 'z-index': '999999', 'width': w, 'height': h};
         cover.css(style).css({'left': x, 'top': y});
     	flash.css(style);
 
@@ -108,8 +108,6 @@
 	$('body').on('mouseover', CLASS_NAME, function(e) {
 		_initButton(e.target.offsetLeft, e.target.offsetTop, e.target.clientWidth, e.target.clientHeight);
 	});
-
-    DataTools.prototype.init = init;
 
 	return DataTools;
 
