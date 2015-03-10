@@ -21,7 +21,7 @@
 
     function DataTools(config) {
 
-        config(config);
+        configure(config);
         init(this.config);
 
     };
@@ -47,7 +47,7 @@
 
     };
 
-    function config(config) {
+    function configure(config) {
         this.config = $.extend(_config, config);
     };
 
@@ -100,7 +100,7 @@
         _initButton(_tar.offsetLeft, _tar.offsetTop, _tar.clientWidth, _tar.clientHeight);
     });
 
-    DataTools.prototype.config = config;
+    DataTools.prototype.configure = configure;
 
     return DataTools;
 
