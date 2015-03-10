@@ -12,7 +12,12 @@
 	<script type="text/javascript" src="../dist/DataTools.min.js"></script>
 	<script>
 		window.onload = function() {
-			var d = new DataTools({flashPath: '../dist/DataTools.swf', fileName: 'test.csv'});
+            var config = {
+                flashPath: '../dist/DataTools.swf',
+                fileName: 'test.csv',
+                data: '1,2,3,4,5\n6,7,8,9,10\n11,12,13,14,15'
+            };
+			new DataTools(config);
 		};
 	</script>
 </html>

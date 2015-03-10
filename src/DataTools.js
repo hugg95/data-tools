@@ -10,7 +10,8 @@
     var _config = {
 
         flashPath: '',
-        fileName: 'down.txt'
+        fileName: 'default.csv',
+        data: ''
 
     };
 
@@ -81,32 +82,29 @@
     // for flash call
     window.setState = function() {
 
-        console.log(_flashState);
         _flashState = true;
-        console.log(_flashState);
 
     };
-    window.setState = setState;
 
     // check whether the flash ready
     function _checkState(id, config) {
 
         if (_flashState) {
-            //var flash = $('#fs-data-tools');
             var flash = document.getElementById('fs-data-tools');
+
             flash.setFileName(config.fileName);
-            flash.setData('dfddsdefdgfd,当计算机尝试读取,多个字节的时候,问题就出现gfdwgfdfd,dfdssfsd');
+            flash.setData(config.data);
             clearInterval(id);
         }
 
     };
 
-
     $(CLASS_NAME).unbind('mouseover');
     $(CLASS_NAME).unbind('click');
 
     $('body').on('mouseover', CLASS_NAME, function(e) {
-        _initButton(e.target.offsetLeft, e.target.offsetTop, e.target.clientWidth, e.target.clientHeight);
+        var _tar = e.target;
+        _initButton(_tar.offsetLeft, _tar.offsetTop, _tar.clientWidth, _tar.clientHeight);
     });
 
     return DataTools;
