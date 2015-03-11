@@ -4,13 +4,15 @@
  * @date 2015/03/04
  * @version 0.0.1
  */
-;var DataTools = (function(window, $, undefined) {
+var DataTools;
+
+;(function(window, $, undefined) {
 
     // default setting
     var _config = {
 
         flashPath: '',
-        fileName: 'default.csv',
+        fileName: '',
         data: ''
 
     };
@@ -19,7 +21,7 @@
     // its value will be set to true after flash ready
     var _flashState = false;
 
-    function DataTools(config) {
+    DataTools = function(config) {
 
         configure(config);
         init();
@@ -51,6 +53,9 @@
         this.config = $.extend(_config, config);
     };
 
+    /**
+     * set attribute "src" of tag <embed> and append to html body
+     */
     function _initFlash(flashPath) {
 
         var cover = $(DIV_HTML),
@@ -60,7 +65,14 @@
 
     };
 
-    // make button as flash button
+    /**
+     * make the flash button covers the general html button
+     *
+     * @param x left offset
+     * @param y top offset
+     * @param w button width
+     * @param h button height
+     */
     function _initButton(x, y, w, h) {
 
         var cover = $('#js-data-tools'),
@@ -72,21 +84,34 @@
 
     };
 
-    // for flash call
+    /**
+     * flash will call this method to notify javascript runtime environment
+     * that flash was ready, if it is ready, it will set _flashState to true
+     */
     window.setState = function() {
 
         _flashState = true;
 
     };
 
-    // check whether the flash ready
+    /**
+     * register flash by calling methods exported by flash
+     */
+    function register() {
+
+        var flash = document.getElementById('fs-data-tools');
+        flash.setFileName(this.config.fileName);
+        flash.setData(this.config.data);
+
+    };
+
+    /**
+     * check whether the flash ready
+     */
     function _checkState(id) {
 
         if (_flashState) {
-            var flash = document.getElementById('fs-data-tools');
-
-            flash.setFileName(this.config.fileName);
-            flash.setData(this.config.data);
+            register();
             clearInterval(id);
         }
 
@@ -101,8 +126,7 @@
     });
 
     DataTools.prototype.configure = configure;
-
-    return DataTools;
+    DataTools.prototype.register = register;
 
 })(window, jQuery);
 

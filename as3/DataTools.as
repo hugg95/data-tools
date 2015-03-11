@@ -42,6 +42,7 @@ package {
         }
 
         // save data into disk
+        // http://help.adobe.com/zh_CN/FlashPlatform/reference/actionscript/3/flash/net/FileReference.html#save()
         public function _export(event:Event):void {
         	var fileReference:FileReference = new FileReference();
             //fileReference.addEventListener(Event.COMPLETE, saved);
