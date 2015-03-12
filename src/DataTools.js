@@ -84,22 +84,31 @@ var DataTools,
     };
 
     /**
-     * set attribute "src" of tag <embed> and append to html body
+     * append the flash object tag into html body
      */
     function _initFlash(flashPath) {
 
-        var tag = '<div id="css-flash-object" style="position: absolute;'
-                + 'width: 0; height: 0; z-index: 99999;">'
-                + '<object type="application/x-shockwave-flash" ' 
-                + 'data="' + flashPath + '" name="flash-object" id="js-flash-object">'
-                + '<param name="movie" value="' + flashPath + '" />'
-                + '<param name="AllowScriptAccess" value="always" />'
-                + '<param name="Quality" value="high" />'
-                + '<param name="BGColor" value="#ffffff" />'
-                + '<param name="WMode" value="Transparent" />'
-                + '</object></div>';
+        var divTag = '<div id="css-flash-object" style="position: absolute;'
+                        + 'width: 0; height: 0; z-index: 99999;">';
 
-        $('body').append(tag);
+
+        var flashTag = '<embed src="' + flashPath + '" width="0" height="0" quality="high" '
+                        + 'bgcolor="#ffffff" name="flash-object" id="js-flash-object" wmode="transparent" '
+                        + 'allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" '
+                        + 'pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>';
+
+        if (document.documentMode && document.documentMode < 10) {
+            flashTag = '<object type="application/x-shockwave-flash" ' 
+                        + 'data="' + flashPath + '" name="flash-object" id="js-flash-object">'
+                        + '<param name="movie" value="' + flashPath + '" />'
+                        + '<param name="AllowScriptAccess" value="always" />'
+                        + '<param name="Quality" value="high" />'
+                        + '<param name="BGColor" value="#ffffff" />'
+                        + '<param name="WMode" value="Transparent" />'
+                        + '</object>';
+        }
+
+        $('body').append($(divTag).append(flashTag));
 
     };
 
