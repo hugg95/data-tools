@@ -4,7 +4,9 @@
  * @date 2015/03/04
  * @version 0.0.1
  */
-var DataTools;
+
+var DataTools,
+    setState;
 
 ;(function(window, $, undefined) {
 
@@ -13,6 +15,7 @@ var DataTools;
 
         flashPath: '',
         fileName: '',
+        // only accept string
         data: ''
 
     };
@@ -20,6 +23,16 @@ var DataTools;
     // _flashState is false by default,
     // its value will be set to true after flash ready
     var _flashState = false;
+
+    /**
+     * flash will call this method to notify javascript runtime environment
+     * that flash was ready, if it is ready, it will set _flashState to true
+     */
+    setState = function() {
+
+        _flashState = true;
+
+    };
 
     DataTools = function(config) {
 
@@ -31,12 +44,15 @@ var DataTools;
     // class name of export button
     var CLASS_NAME = '.js-export-btn';
 
-    var DIV_HTML = '<div id="js-data-tools" style="position: absolute; width: 0; height: 0; z-index: 99999;"></div>';
+    var DIV_TAG = '<div id="css-flash-object" style="position: absolute; width: 0; height: 0; z-index: 99999;"></div>';
 
-    var EMBED_HTML = '<embed width="0" height="0" quality="high" bgcolor="#ffffff" '
-                    + 'name="fs-data-tools" id="fs-data-tools" wmode="transparent" '
-                    + 'allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" '
-                    + 'pluginspage="http://www.macromedia.com/go/getflashplayer" />';
+    var OBJECT_TAG = '<object type="application/x-shockwave-flash" name="flash-object" id="js-flash-object">'
+                        + '<param name="movie" value="DataTools.swf" />'
+                        + '<param name="AllowScriptAccess" value="always" />'
+                        + '<param name="Quality" value="high" />'
+                        + '<param name="BGColor" value="#ffffff" />'
+                        + '<param name="WMode" value="Transparent" />'
+                        + '</object>';
 
     function _init() {
 
@@ -60,10 +76,14 @@ var DataTools;
      */
     function _initFlash(flashPath) {
 
-        var cover = $(DIV_HTML),
-            flash = $(EMBED_HTML).attr('src', flashPath);
+        var divTag = $(DIV_TAG),
+            objectTag = $(OBJECT_TAG);
 
-        $('body').append(cover.append(flash));
+        objectTag.attr('data', flashPath);
+        objectTag.find('param[name="movie"]').attr('value', flashPath);
+        divTag.append(objectTag);
+
+        $('body').append(divTag.html());
 
     };
 
@@ -77,22 +97,12 @@ var DataTools;
      */
     function _initButton(x, y, w, h) {
 
-        var cover = $('#js-data-tools'),
-            flash = $('#fs-data-tools');
+        var divTag = $('#css-flash-object'),
+            objectTag = $('#js-flash-object');
 
         var style = {'width': w, 'height': h};
-        cover.css(style).css({'left': x, 'top': y});
-        flash.css(style);
-
-    };
-
-    /**
-     * flash will call this method to notify javascript runtime environment
-     * that flash was ready, if it is ready, it will set _flashState to true
-     */
-    window.setState = function() {
-
-        _flashState = true;
+        divTag.css(style).css({'left': x, 'top': y});
+        objectTag.css(style);
 
     };
 
@@ -102,7 +112,7 @@ var DataTools;
     function register() {
 
         if (_flashState) {
-            var flash = document.getElementById('fs-data-tools');
+            var flash = document.getElementById('js-flash-object');
 
             flash.setFileName(this.config.fileName);
             flash.setData(this.config.data);
