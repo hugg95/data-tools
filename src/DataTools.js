@@ -6,7 +6,8 @@
  */
 
 var DataTools,
-    setState, test;
+    setState,
+    test;
 
 ;(function(window, $, undefined) {
 
@@ -43,7 +44,7 @@ var DataTools,
         } else {
             alert(testMsg);
         }
-        
+
     }
 
     DataTools = function(config) {
@@ -77,6 +78,9 @@ var DataTools,
 
     };
 
+    /**
+     * configure DataTools
+     */
     function configure(config) {
 
         this.config = $.extend(_config, config);
@@ -88,17 +92,21 @@ var DataTools,
      */
     function _initFlash(flashPath) {
 
-        var divTag = '<div id="css-flash-object" style="position: absolute;'
+        var _cover = '<div id="css-flash-object" style="position: absolute;'
                         + 'width: 0; height: 0; z-index: 99999;">';
 
 
-        var flashTag = '<embed src="' + flashPath + '" width="0" height="0" quality="high" '
-                        + 'bgcolor="#ffffff" name="flash-object" id="js-flash-object" wmode="transparent" '
-                        + 'allowScriptAccess="always" allowFullScreen="false" type="application/x-shockwave-flash" '
-                        + 'pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>';
+        var _flash = '<embed src="' + flashPath + '" width="0" height="0" '
+                        + 'quality="high" bgcolor="#ffffff" name="flash-object" '
+                        + 'id="js-flash-object" wmode="transparent" allowScriptAccess="always" '
+                        + 'allowFullScreen="false" type="application/x-shockwave-flash" '
+                        + 'pluginspage="http://www.macromedia.com/go/getflashplayer">'
+                        + '</embed>';
 
-        if (document.documentMode && document.documentMode < 10) {
-            flashTag = '<object type="application/x-shockwave-flash" ' 
+        // for IE8, IE9
+        if (document.documentMode
+                && document.documentMode < 10) {
+            _flash = '<object type="application/x-shockwave-flash" '
                         + 'data="' + flashPath + '" name="flash-object" id="js-flash-object">'
                         + '<param name="movie" value="' + flashPath + '" />'
                         + '<param name="AllowScriptAccess" value="always" />'
@@ -108,7 +116,7 @@ var DataTools,
                         + '</object>';
         }
 
-        $('body').append($(divTag).append(flashTag));
+        $('body').append($(_cover).append(_flash));
 
     };
 
@@ -122,12 +130,12 @@ var DataTools,
      */
     function _initButton(x, y, w, h) {
 
-        var divTag = $('#css-flash-object'),
-            objectTag = $('#js-flash-object');
+        var _cover = $('#css-flash-object'),
+            _flash = $('#js-flash-object');
 
         var style = {'width': w, 'height': h};
-        divTag.css(style).css({'left': x, 'top': y});
-        objectTag.css(style);
+        _cover.css(style).css({'left': x, 'top': y});
+        _flash.css(style);
 
     };
 
