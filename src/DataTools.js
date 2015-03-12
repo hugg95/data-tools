@@ -6,7 +6,7 @@
  */
 
 var DataTools,
-    setState;
+    setState, test;
 
 ;(function(window, $, undefined) {
 
@@ -34,6 +34,18 @@ var DataTools,
 
     };
 
+    // test information
+    test = function() {
+
+        var testMsg = 'flash loaded successfully';
+        if (console && console.log) {
+            console.log(testMsg);
+        } else {
+            alert(testMsg);
+        }
+        
+    }
+
     DataTools = function(config) {
 
         configure(config);
@@ -44,15 +56,15 @@ var DataTools,
     // class name of export button
     var CLASS_NAME = '.js-export-btn';
 
-    var DIV_TAG = '<div id="css-flash-object" style="position: absolute; width: 0; height: 0; z-index: 99999;"></div>';
+    //var DIV_TAG = '<div id="css-flash-object" style="position: absolute; width: 0; height: 0; z-index: 99999;"></div>';
 
-    var OBJECT_TAG = '<object type="application/x-shockwave-flash" name="flash-object" id="js-flash-object">'
+    /*var OBJECT_TAG = '<object type="application/x-shockwave-flash" name="flash-object" id="js-flash-object">'
                         + '<param name="movie" value="DataTools.swf" />'
                         + '<param name="AllowScriptAccess" value="always" />'
                         + '<param name="Quality" value="high" />'
                         + '<param name="BGColor" value="#ffffff" />'
                         + '<param name="WMode" value="Transparent" />'
-                        + '</object>';
+                        + '</object>';*/
 
     function _init() {
 
@@ -76,14 +88,18 @@ var DataTools,
      */
     function _initFlash(flashPath) {
 
-        var divTag = $(DIV_TAG),
-            objectTag = $(OBJECT_TAG);
+        var tag = '<div id="css-flash-object" style="position: absolute;'
+                + 'width: 0; height: 0; z-index: 99999;">'
+                + '<object type="application/x-shockwave-flash" ' 
+                + 'data="' + flashPath + '" name="flash-object" id="js-flash-object">'
+                + '<param name="movie" value="' + flashPath + '" />'
+                + '<param name="AllowScriptAccess" value="always" />'
+                + '<param name="Quality" value="high" />'
+                + '<param name="BGColor" value="#ffffff" />'
+                + '<param name="WMode" value="Transparent" />'
+                + '</object></div>';
 
-        objectTag.attr('data', flashPath);
-        objectTag.find('param[name="movie"]').attr('value', flashPath);
-        divTag.append(objectTag);
-
-        $('body').append(divTag.html());
+        $('body').append(tag);
 
     };
 

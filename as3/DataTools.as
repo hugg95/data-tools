@@ -39,6 +39,7 @@ package {
         // notify javascript environment that flash ready
         protected function notify():void {
             ExternalInterface.call('setState');
+            ExternalInterface.call('test');
         }
 
         // save data into disk
