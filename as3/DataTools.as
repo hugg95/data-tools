@@ -62,7 +62,7 @@ package {
             bytes.writeByte(0xEF);
             bytes.writeByte(0xBB);
             bytes.writeByte(0xBF);
-            bytes.writeBytes(xlsBytes, 0, xlsBytes.length);
+            xlsBytes.readBytes(bytes, 3);
 
             return bytes;
         }
@@ -73,7 +73,7 @@ package {
                 sheet.resize(maxLines + 10, maxColumns + 10);
             }
 
-            sheet.setCell(x, y, Number(v));
+            sheet.setCell(x, y, v);
 
             return sheet;
         }

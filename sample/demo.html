@@ -14,8 +14,9 @@
 		window.onload = function() {
             var config = {
                 flashPath: '../dist/DataTools.swf',
-                fileName: 'test.csv',
-                data: '1,2,3,4,5\n6,7,8,9,10\n11,12,13,14,15'
+                fileName: 'test.xls',
+                data: '1,2,3,4,5\n6,7,8,9,10\n11,12,13,14,15',
+                dataArr: [['demo','我的',3,],[4,'heihei',6],[7,100,9]]
             };
 			new DataTools(config);
 		};
