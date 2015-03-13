@@ -9,13 +9,16 @@ package {
     import flash.utils.ByteArray;
     import flash.external.ExternalInterface;
     import flash.net.FileReference;
+    import com.as3xls.xls.*;
 
     public class DataTools extends Sprite {
 
     	private var fileName:String = 'download.txt';
         private var charset:String = 'utf-8';
         private var data:String = '';
+        private var dataArr:Array;
         private var btn:Sprite;
+        private var sheet:Sheet;
 
     	public function DataTools() {
             stage.scaleMode = StageScaleMode.EXACT_FIT;
@@ -42,13 +45,47 @@ package {
             ExternalInterface.call('test');
         }
 
+        protected function createXls():ByteArray {
+            var excelFile:ExcelFile = new ExcelFile();
+            for (var i:int = 0; i < dataArr.length; i++) {
+                var line:Array = dataArr[i];
+                for (var j:int = 0; j < line.length; j++) {
+                    var obj:Object = line[j];
+                    excelFile.sheets.addItem(createSheet(dataArr.length, line.length, i, j, String(obj)));
+                }
+            }
+
+            var bytes:ByteArray = new ByteArray();
+            var xlsBytes:ByteArray = excelFile.saveToByteArray();
+
+            // add UTF-8 BOM
+            bytes.writeByte(0xEF);
+            bytes.writeByte(0xBB);
+            bytes.writeByte(0xBF);
+            bytes.writeBytes(xlsBytes, 0, xlsBytes.length);
+
+            return bytes;
+        }
+
+        protected function createSheet(maxLines:int, maxColumns:int, x:int, y:int, v:Object):Sheet {
+            if (!sheet) {
+                sheet = new Sheet();
+                sheet.resize(maxLines + 10, maxColumns + 10);
+            }
+
+            sheet.setCell(x, y, Number(v));
+
+            return sheet;
+        }
+
         // save data into disk
         // http://help.adobe.com/zh_CN/FlashPlatform/reference/actionscript/3/flash/net/FileReference.html#save()
         public function _export(event:Event):void {
         	var fileReference:FileReference = new FileReference();
             //fileReference.addEventListener(Event.COMPLETE, saved);
             if (charset == 'utf-8') {
-                fileReference.save(saveAsUtf8(data), fileName);
+                //fileReference.save(saveAsUtf8(data), fileName);
+                fileReference.save(createXls(), fileName);
             } else if (charset == 'utf-16') {
                 fileReference.save(saveAsUtf16(data), fileName);
             }
@@ -84,6 +121,7 @@ package {
         	ExternalInterface.addCallback('setFileName', setFileName);
         	ExternalInterface.addCallback('setCharset', setCharset);
             ExternalInterface.addCallback('setData', setData);
+            ExternalInterface.addCallback('setDataArr', setDataArr);
         }
 
         // set file name
@@ -98,6 +136,10 @@ package {
 
         public function setData(newData:String):void {
             data = newData;
+        }
+
+        public function setDataArr(newDataArr:Array):void {
+            dataArr = newDataArr;
         }
 
     }

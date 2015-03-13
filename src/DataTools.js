@@ -17,7 +17,8 @@ var DataTools,
         flashPath: '',
         fileName: '',
         // only accept string
-        data: ''
+        data: '',
+        dataArr: []
 
     };
 
@@ -57,16 +58,6 @@ var DataTools,
     // class name of export button
     var CLASS_NAME = '.js-export-btn';
 
-    //var DIV_TAG = '<div id="css-flash-object" style="position: absolute; width: 0; height: 0; z-index: 99999;"></div>';
-
-    /*var OBJECT_TAG = '<object type="application/x-shockwave-flash" name="flash-object" id="js-flash-object">'
-                        + '<param name="movie" value="DataTools.swf" />'
-                        + '<param name="AllowScriptAccess" value="always" />'
-                        + '<param name="Quality" value="high" />'
-                        + '<param name="BGColor" value="#ffffff" />'
-                        + '<param name="WMode" value="Transparent" />'
-                        + '</object>';*/
-
     function _init() {
 
         _initFlash(this.config.flashPath);
@@ -93,7 +84,7 @@ var DataTools,
     function _initFlash(flashPath) {
 
         var _cover = '<div id="css-flash-object" style="position: absolute;'
-                        + 'width: 0; height: 0; z-index: 99999;">';
+                        + 'width: 0; height: 0; z-index: 99999;"></div>';
 
 
         var _flash = '<embed src="' + flashPath + '" width="0" height="0" '
@@ -108,7 +99,7 @@ var DataTools,
                 && document.documentMode < 10) {
             _flash = '<object type="application/x-shockwave-flash" '
                         + 'data="' + flashPath + '" name="flash-object" id="js-flash-object">'
-                        + '<param name="movie" value="' + flashPath + '" />'
+                        + '<param name="Movie" value="' + flashPath + '" />'
                         + '<param name="AllowScriptAccess" value="always" />'
                         + '<param name="Quality" value="high" />'
                         + '<param name="BGColor" value="#ffffff" />'
@@ -148,6 +139,7 @@ var DataTools,
             var flash = document.getElementById('js-flash-object');
 
             flash.setFileName(this.config.fileName);
+            flash.setDataArr(this.config.dataArr);
             flash.setData(this.config.data);
         }
 
