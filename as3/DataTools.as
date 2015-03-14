@@ -55,16 +55,9 @@ package {
                 }
             }
 
-            var bytes:ByteArray = new ByteArray();
             var xlsBytes:ByteArray = excelFile.saveToByteArray();
 
-            // add UTF-8 BOM
-            bytes.writeByte(0xEF);
-            bytes.writeByte(0xBB);
-            bytes.writeByte(0xBF);
-            xlsBytes.readBytes(bytes, 3);
-
-            return bytes;
+            return xlsBytes;
         }
 
         protected function createSheet(maxLines:int, maxColumns:int, x:int, y:int, v:Object):Sheet {
