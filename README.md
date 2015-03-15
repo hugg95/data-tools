@@ -8,14 +8,11 @@ DataTools now provides ability to export data into xls from the web page
 2. copy file __DataTools.swf__ and __DataTools.js__ into your own project, 
 and add `<script src="path/DataTools.js" type="text/javascript">` into your html file.
 3. create an instance of DataTools and configure it:   
-<pre>
-    <script type="text/javascript">
+<script type="text/javascript">
         var config = {
             flashPath: 'youpath/DataTools.swf',
             fileName: 'demo.xls',
             dataArr: [[1,2,3], [4,5,6], [7, 8, 9]]
         };
         var dataTools = new DataTools(config);
-    </script>
-</pre>   
-
+</script>
