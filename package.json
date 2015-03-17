@@ -1,5 +1,5 @@
 {
-  "name": "DataTools",
+  "name": "DataTools.js",
   "version": "1.0.0",
   "description": "An utility functions collection in javascript",
   "main": "src/DataTools.js",

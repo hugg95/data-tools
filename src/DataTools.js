@@ -16,13 +16,14 @@ var DataTools,
 
         flashPath: '',
         fileName: '',
-        // only accept string
-        data: '',
-        dataArr: []
+        // class name of the export button or other HTML elements
+        className: '.js-export-btn',
+        // the parameter 'data' only accept string
+        data: ''
 
     };
 
-    // _flashState is false by default,
+    // _flashState is false when document loaded,
     // its value will be set to true after flash ready
     var _flashState = false;
 
@@ -36,17 +37,18 @@ var DataTools,
 
     };
 
-    // test information
+    // javascript may call this function
+    // to test whether the flash is available
     test = function() {
 
-        var testMsg = 'flash loaded successfully';
+        var testMsg = 'flash avaliable now';
         if (console && console.log) {
             console.log(testMsg);
         } else {
             alert(testMsg);
         }
 
-    }
+    };
 
     DataTools = function(config) {
 
@@ -54,9 +56,6 @@ var DataTools,
         _init();
 
     };
-
-    // class name of export button
-    var CLASS_NAME = '.js-export-btn';
 
     function _init() {
 
@@ -76,6 +75,12 @@ var DataTools,
 
         this.config = $.extend(_config, config);
 
+        if ('.' !== this.config.className.charAt(0)) {
+            this.config.className = '.' + this.config.className;
+        }
+
+        DataTools.config = this.config;
+
     };
 
     /**
@@ -87,6 +92,7 @@ var DataTools,
                         + 'width: 0; height: 0; z-index: 99999;"></div>';
 
 
+        // for modern internet explorers
         var _flash = '<embed src="' + flashPath + '" width="0" height="0" '
                         + 'quality="high" bgcolor="#ffffff" name="flash-object" '
                         + 'id="js-flash-object" wmode="transparent" allowScriptAccess="always" '
@@ -94,7 +100,7 @@ var DataTools,
                         + 'pluginspage="http://www.macromedia.com/go/getflashplayer">'
                         + '</embed>';
 
-        // for IE8, IE9
+        // for old versions of Microsoft internet explorer
         if (document.documentMode
                 && document.documentMode < 10) {
             _flash = '<object type="application/x-shockwave-flash" '
@@ -112,7 +118,7 @@ var DataTools,
     };
 
     /**
-     * make the flash button covers the general html button
+     * make the flash button covers the general HTML button
      *
      * @param x left offset
      * @param y top offset
@@ -139,7 +145,6 @@ var DataTools,
             var flash = document.getElementById('js-flash-object');
 
             flash.setFileName(this.config.fileName);
-            flash.setDataArr(this.config.dataArr);
             flash.setData(this.config.data);
         }
 
@@ -160,7 +165,7 @@ var DataTools,
     $(CLASS_NAME).unbind('mouseover');
     $(CLASS_NAME).unbind('click');
 
-    $('body').on('mouseover', CLASS_NAME, function(e) {
+    $('body').on('mouseover', DataTools.config.className, function(e) {
         var _tar = e.target;
         _initButton(_tar.offsetLeft, _tar.offsetTop, _tar.clientWidth, _tar.clientHeight);
     });

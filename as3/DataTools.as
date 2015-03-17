@@ -9,16 +9,13 @@ package {
     import flash.utils.ByteArray;
     import flash.external.ExternalInterface;
     import flash.net.FileReference;
-    import com.as3xls.xls.*;
 
     public class DataTools extends Sprite {
 
-    	private var fileName:String = 'download.txt';
-        private var charset:String = 'utf-8';
+    	private var fileName:String = 'download.csv';
         private var data:String = '';
-        private var dataArr:Array;
         private var btn:Sprite;
-        private var sheet:Sheet;
+        //private var sheet:Sheet;
 
     	public function DataTools() {
             stage.scaleMode = StageScaleMode.EXACT_FIT;
@@ -45,6 +42,7 @@ package {
             ExternalInterface.call('test');
         }
 
+        /*
         protected function createXls():ByteArray {
             var excelFile:ExcelFile = new ExcelFile();
             for (var i:int = 0; i < dataArr.length; i++) {
@@ -70,18 +68,14 @@ package {
 
             return sheet;
         }
+        */
 
         // save data into disk
         // http://help.adobe.com/zh_CN/FlashPlatform/reference/actionscript/3/flash/net/FileReference.html#save()
         public function _export(event:Event):void {
         	var fileReference:FileReference = new FileReference();
             //fileReference.addEventListener(Event.COMPLETE, saved);
-            if (charset == 'utf-8') {
-                //fileReference.save(saveAsUtf8(data), fileName);
-                fileReference.save(createXls(), fileName);
-            } else if (charset == 'utf-16') {
-                fileReference.save(saveAsUtf16(data), fileName);
-            }
+            fileReference.save(saveAsUtf8(data), fileName);
         }
 
         protected function saveAsUtf8(str:String):ByteArray {
@@ -96,25 +90,9 @@ package {
             return bytes;
         }
 
-        protected function saveAsUtf16(str:String):ByteArray {
-            var bytes:ByteArray = new ByteArray();
-            bytes.writeByte(0xFF);
-            bytes.writeByte(0xFE);
-            for (var i:int = 0; i < str.length; i++) {
-                var code:int = str.charCodeAt(i);
-                if (code < 0XFF) {
-                    bytes.writeByte(code);
-                }
-            }
-
-            return bytes;
-        }
-
         protected function register():void {
         	ExternalInterface.addCallback('setFileName', setFileName);
-        	ExternalInterface.addCallback('setCharset', setCharset);
             ExternalInterface.addCallback('setData', setData);
-            ExternalInterface.addCallback('setDataArr', setDataArr);
         }
 
         // set file name
@@ -122,17 +100,8 @@ package {
         	fileName = newFileName;
         }
 
-        // set charset
-        public function setCharset(newCharset:String):void {
-            charset = newCharset;
-        }
-
         public function setData(newData:String):void {
             data = newData;
-        }
-
-        public function setDataArr(newDataArr:Array):void {
-            dataArr = newDataArr;
         }
 
     }
