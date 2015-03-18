@@ -23,7 +23,8 @@
      *          true: is numeric, false: is not numeric
      */
     function isNumeric(string) {
-        //
+        var numeric = new RegExp(/^\d+|\d+\.\d+$/);
+        return numeric.test(string);
     };
 
     /**
@@ -33,7 +34,8 @@
      *          true: is percentege, false: is not percentage
      */
     function isPercentage(string) {
-        //
+        var percentage = new RegExp(/^(\d+|\d+\.\d+)\%{1}$/);
+        return percentage.test(string);
     }
 
     /**
@@ -57,6 +59,23 @@
 
                 if ('string' === typeof cell.v) {
                     cell.t = 's';
+                    if (isPercentage(cell.v)) {
+                        cell.t = '';
+                    }
+                }
+                if ('number' === typeof cell.v) {
+                    cell.t = 'n';
+                    if ((cell.t + '').indexOf('.') !== -1) {
+                        cell.z = XLSX.SSF._table[2];
+                    }
+                }
+                if ('boolean' === typeof cell.v) {
+                    cell.t = 'b';
+                }
+                if (cell.v instanceof Date) {
+                    cell.t = 'n';
+                    cell.z = XLSX.SSF._table[14];
+                    cell.v = datenum(cell.v);
                 }
             }
         }
