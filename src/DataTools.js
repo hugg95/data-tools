@@ -3,6 +3,7 @@
  * @author victor li
  * @date 2015/03/04
  * @version 0.0.1
+ * released under terms of MIT lincense
  */
 
 var DataTools,
@@ -52,6 +53,8 @@ var DataTools,
 
     DataTools = function(config) {
 
+        if (!(this instanceof DataTools))
+            return new DataTools(config);
         configure(config);
         _init();
 
