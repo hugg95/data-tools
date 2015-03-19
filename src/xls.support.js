@@ -38,11 +38,17 @@
         return percentage.test(string);
     }
 
+    function datenum(v, date1904) {
+        if(date1904) v+=1462;
+        var epoch = Date.parse(v);
+        return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
+    }
+
     /**
      * create Microsoft XLS/XLSX worksheet
      * @param data a two-dimensional array
      */
-    function createWorksheet = function(data) {
+    function createWorksheet(data) {
 
         var worksheet = {},
             range = {s: {c: 10000, r: 10000}, e: {c: 0, r: 0}};
@@ -57,30 +63,69 @@
 
                 if (null === cell.v) continue;
 
+                // string format
                 if ('string' === typeof cell.v) {
                     cell.t = 's';
+
+                    // "0.00%"
                     if (isPercentage(cell.v)) {
-                        cell.t = '';
+                        cell.t = 'n';
+                        cell.z = XLSX.SSF._table[10];
                     }
                 }
+
                 if ('number' === typeof cell.v) {
                     cell.t = 'n';
+                    // "0.00"
                     if ((cell.t + '').indexOf('.') !== -1) {
                         cell.z = XLSX.SSF._table[2];
                     }
                 }
+
+                // boolean format
                 if ('boolean' === typeof cell.v) {
                     cell.t = 'b';
                 }
+
+                // date format
                 if (cell.v instanceof Date) {
                     cell.t = 'n';
                     cell.z = XLSX.SSF._table[14];
                     cell.v = datenum(cell.v);
                 }
+
+                var cellRef = XLSX.utils.encode_cell({c: c, r: r});
+                wooksheet[cellRef] = cell;
+
             }
         }
 
+        wooksheet['!ref'] = XLSX.utils.encode_range(range);
+
+        return wooksheet;
     };
+
+    function saveExcel(data, fileName, sheetName, XLSX) {
+        var wookbook = new Wookbook(),
+            wooksheet = createWooksheet(data);
+
+        wookbook.SheetNames.push(sheetName);
+        wookbook.Sheets[sheetName] = wooksheet;
+
+        var bookType = XLSX ? 'xlsx' : 'xls',
+            wbout = XLSX.write(workbook, {bookType: bookType, bookSST: true, type: 'binary'});
+
+        var buf = new ArrayBuffer(wbout.length),
+            view = new Uint8Array(buf);
+        for (var i = 0; i < wbout.length; i++) {
+            view[i] = wbout.charCodeAt(i) & 0xFF;
+        }
+
+        saveAs(new Bolb([buf], {type: 'application/octet-stream'}), fileName + '.' + bookType);
+
+    };
+
+    DataTools.prototype.saveExcel = saveExcel;
 
 })(window);
 

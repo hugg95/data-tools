@@ -53,8 +53,6 @@ var DataTools,
 
     DataTools = function(config) {
 
-        if (!(this instanceof DataTools))
-            return new DataTools(config);
         configure(config);
         _init();
 
@@ -71,6 +69,8 @@ var DataTools,
 
     };
 
+    var _this = {};
+
     /**
      * configure DataTools
      */
@@ -78,11 +78,11 @@ var DataTools,
 
         this.config = $.extend(_config, config);
 
+        _this.config = this.config;
+
         if ('.' !== this.config.className.charAt(0)) {
             this.config.className = '.' + this.config.className;
         }
-
-        DataTools.config = this.config;
 
     };
 
@@ -165,10 +165,12 @@ var DataTools,
 
     };
 
-    $(CLASS_NAME).unbind('mouseover');
-    $(CLASS_NAME).unbind('click');
+    console.log(_this);
 
-    $('body').on('mouseover', DataTools.config.className, function(e) {
+    $(_this.config.className).unbind('mouseover');
+    $(_this.config.className).unbind('click');
+
+    $('body').on('mouseover', _this.config.className, function(e) {
         var _tar = e.target;
         _initButton(_tar.offsetLeft, _tar.offsetTop, _tar.clientWidth, _tar.clientHeight);
     });
