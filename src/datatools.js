@@ -119,7 +119,8 @@ var DataToolsSupport = {
 
         $('body').on('mouseover', this.config.className, function(e) {
             var _tar = e.target;
-            _initButton(_tar.offsetLeft, _tar.offsetTop, _tar.clientWidth, _tar.clientHeight);
+            _initButton(_tar.offsetLeft, _tar.offsetTop,
+               _tar.clientWidth, _tar.clientHeight);
         });
     };
 

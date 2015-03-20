@@ -37,13 +37,13 @@
     function isPercentage(string) {
         var percentage = new RegExp(/^(\d+|\d+\.\d+)\%{1}$/);
         return percentage.test(string);
-    }
+    };
 
     function datenum(v, date1904) {
         if(date1904) v+=1462;
         var epoch = Date.parse(v);
         return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
-    }
+    };
 
     /**
      * create Microsoft XLS/XLSX worksheet
@@ -106,7 +106,22 @@
         return worksheet;
     };
 
-    function saveExcel(data, fileName, sheetName, fileType) {
+    /**
+     * save excel into local disk
+     * @param name name of excel
+     * @param type workbook type, XLS or XLSX
+     * @param sheetName sheet name
+     */
+    function saveExcel(sheetName) {
+
+        var data = this.config.data,
+            nameWithType = this.config.fileName.split('.'),
+            name = nameWithType[0],
+            type = nameWithType[1];
+
+
+        if (!sheetName) sheetName = name;
+
         var workbook = new Workbook(),
             worksheet = createWorksheet(data);
 
@@ -115,7 +130,7 @@
 
         var wbout = XLSX.write(workbook,
                 {
-                    bookType: fileType,
+                    bookType: type,
                     bookSST: true,
                     type: 'binary'
                 });
@@ -129,7 +144,7 @@
         saveAs(new Blob([buf],
                    {
                        type: 'application/octet-stream'
-                   }), fileName + '.' + fileType);
+                   }), name + '.' + type);
 
     };
 
