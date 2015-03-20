@@ -5,9 +5,10 @@
  * @version 0.0.1
  * released under terms of MIT lincense
  */
-'use strict';
 
 ;(function(window, undefined) {
+
+    'use strict';
 
     function Workbook() {
 
@@ -105,15 +106,19 @@
         return wooksheet;
     };
 
-    function saveExcel(data, fileName, sheetName, XLSX) {
+    function saveExcel(data, fileName, sheetName, fileType) {
         var wookbook = new Wookbook(),
             wooksheet = createWooksheet(data);
 
         wookbook.SheetNames.push(sheetName);
         wookbook.Sheets[sheetName] = wooksheet;
 
-        var bookType = XLSX ? 'xlsx' : 'xls',
-            wbout = XLSX.write(workbook, {bookType: bookType, bookSST: true, type: 'binary'});
+        var wbout = XLSX.write(workbook,
+                {
+                    bookType: fileType,
+                    bookSST: true,
+                    type: 'binary'
+                });
 
         var buf = new ArrayBuffer(wbout.length),
             view = new Uint8Array(buf);
@@ -121,7 +126,10 @@
             view[i] = wbout.charCodeAt(i) & 0xFF;
         }
 
-        saveAs(new Bolb([buf], {type: 'application/octet-stream'}), fileName + '.' + bookType);
+        saveAs(new Bolb([buf],
+                   {
+                       type: 'application/octet-stream'
+                   }), fileName + '.' + fileType);
 
     };
 

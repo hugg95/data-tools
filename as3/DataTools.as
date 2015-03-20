@@ -38,8 +38,8 @@ package {
 
         // notify javascript environment that flash ready
         protected function notify():void {
-            ExternalInterface.call('setState');
-            ExternalInterface.call('test');
+            ExternalInterface.call('DataToolsSupport.setState');
+            ExternalInterface.call('DataToolsSupport.test');
         }
 
         /*

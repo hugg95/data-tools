@@ -6,11 +6,40 @@
  * released under terms of MIT lincense
  */
 
-var DataTools,
-    setState,
-    test;
+var DataToolsSupport = {
+
+    // _flashState is false when document loaded,
+    // its value will be set to true after flash ready
+    flashState: false,
+
+    /**
+     * flash will call this method to notify javascript runtime environment
+     * that flash was ready, if it is ready, it will set _flashState to true
+     */
+    setState: function() {
+
+        this.flashState = true;
+
+    },
+
+    // javascript may call this function
+    // to test whether the flash is available
+    test: function() {
+
+        var testMsg = 'flash avaliable now';
+        if (console && console.log) {
+            console.log(testMsg);
+        } else {
+            alert(testMsg);
+        }
+
+    }
+
+};
 
 ;(function(window, $, undefined) {
+
+    'use strict';
 
     // default setting
     var _config = {
@@ -24,66 +53,8 @@ var DataTools,
 
     };
 
-    // _flashState is false when document loaded,
-    // its value will be set to true after flash ready
-    var _flashState = false;
-
-    /**
-     * flash will call this method to notify javascript runtime environment
-     * that flash was ready, if it is ready, it will set _flashState to true
-     */
-    setState = function() {
-
-        _flashState = true;
-
-    };
-
-    // javascript may call this function
-    // to test whether the flash is available
-    test = function() {
-
-        var testMsg = 'flash avaliable now';
-        if (console && console.log) {
-            console.log(testMsg);
-        } else {
-            alert(testMsg);
-        }
-
-    };
-
-    DataTools = function(config) {
-
-        configure(config);
-        _init();
-
-    };
-
-    function _init() {
-
-        _initFlash(this.config.flashPath);
-
-        var _id = setInterval(function() {
-            _checkState(_id);
-
-        }, 100);
-
-    };
-
-    var _this = {};
-
-    /**
-     * configure DataTools
-     */
-    function configure(config) {
-
-        this.config = $.extend(_config, config);
-
-        _this.config = this.config;
-
-        if ('.' !== this.config.className.charAt(0)) {
-            this.config.className = '.' + this.config.className;
-        }
-
+    function DataTools() {
+        // empty line
     };
 
     /**
@@ -140,17 +111,16 @@ var DataTools,
     };
 
     /**
-     * register flash by calling methods exported by flash
+     * register events listener
      */
-    function register() {
+    function _registerEvents() {
+        $(this.config.className).unbind('mouseover');
+        $(this.config.className).unbind('click');
 
-        if (_flashState) {
-            var flash = document.getElementById('js-flash-object');
-
-            flash.setFileName(this.config.fileName);
-            flash.setData(this.config.data);
-        }
-
+        $('body').on('mouseover', this.config.className, function(e) {
+            var _tar = e.target;
+            _initButton(_tar.offsetLeft, _tar.offsetTop, _tar.clientWidth, _tar.clientHeight);
+        });
     };
 
     /**
@@ -158,25 +128,51 @@ var DataTools,
      */
     function _checkState(id) {
 
-        if (_flashState) {
-            register();
+        if (DataToolsSupport.flashState) {
+
+            this.registerFlash();
             clearInterval(id);
         }
 
     };
 
-    console.log(_this);
+    DataTools.prototype.init = function() {
+        _initFlash(this.config.flashPath);
+        var _this = this;
+        var _id = setInterval(function() {
+            _checkState.call(_this, _id);
 
-    $(_this.config.className).unbind('mouseover');
-    $(_this.config.className).unbind('click');
+        }, 100);
+    };
 
-    $('body').on('mouseover', _this.config.className, function(e) {
-        var _tar = e.target;
-        _initButton(_tar.offsetLeft, _tar.offsetTop, _tar.clientWidth, _tar.clientHeight);
-    });
+    /**
+     * configure DataTools
+     */
+    DataTools.prototype.configure = function(config) {
+        this.config = $.extend(_config, config);
 
-    DataTools.prototype.configure = configure;
-    DataTools.prototype.register = register;
+        if ('.' !== this.config.className.charAt(0)) {
+            this.config.className = '.' + this.config.className;
+        }
+
+        _registerEvents.call(this);
+    };
+
+    /**
+     * register flash by calling methods exported by flash
+     */
+    DataTools.prototype.registerFlash = function() {
+        if (DataToolsSupport.flashState) {
+            var flash = document.getElementById('js-flash-object');
+
+            if (flash) {
+                flash.setFileName(this.config.fileName);
+                flash.setData(this.config.data);
+            }
+        }
+    };
+
+    window.DataTools = DataTools;
 
 })(window, jQuery);
 
