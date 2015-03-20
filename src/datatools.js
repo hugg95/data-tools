@@ -58,9 +58,10 @@ var DataToolsSupport = {
     };
 
     /**
-     * append the flash object tag into html body
+     * append the flash object tag into html body and load swf
+     * @param flashPath
      */
-    function _initFlash(flashPath) {
+    function _loadFlash(flashPath) {
 
         var _cover = '<div id="css-flash-object" style="position: absolute;'
                         + 'width: 0; height: 0; z-index: 99999;"></div>';
@@ -137,8 +138,8 @@ var DataToolsSupport = {
 
     };
 
-    DataTools.prototype.init = function() {
-        _initFlash(this.config.flashPath);
+    DataTools.prototype.initFlash = function() {
+        _loadFlash(this.config.flashPath);
         var _this = this;
         var _id = setInterval(function() {
             _checkState.call(_this, _id);
