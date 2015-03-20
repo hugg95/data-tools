@@ -96,22 +96,22 @@
                 }
 
                 var cellRef = XLSX.utils.encode_cell({c: c, r: r});
-                wooksheet[cellRef] = cell;
+                worksheet[cellRef] = cell;
 
             }
         }
 
-        wooksheet['!ref'] = XLSX.utils.encode_range(range);
+        worksheet['!ref'] = XLSX.utils.encode_range(range);
 
-        return wooksheet;
+        return worksheet;
     };
 
     function saveExcel(data, fileName, sheetName, fileType) {
-        var wookbook = new Wookbook(),
-            wooksheet = createWooksheet(data);
+        var workbook = new Workbook(),
+            worksheet = createWorksheet(data);
 
-        wookbook.SheetNames.push(sheetName);
-        wookbook.Sheets[sheetName] = wooksheet;
+        workbook.SheetNames.push(sheetName);
+        workbook.Sheets[sheetName] = worksheet;
 
         var wbout = XLSX.write(workbook,
                 {
@@ -126,7 +126,7 @@
             view[i] = wbout.charCodeAt(i) & 0xFF;
         }
 
-        saveAs(new Bolb([buf],
+        saveAs(new Blob([buf],
                    {
                        type: 'application/octet-stream'
                    }), fileName + '.' + fileType);
