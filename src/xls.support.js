@@ -6,7 +6,7 @@
  * released under terms of MIT lincense
  */
 
-;(function(window, undefined) {
+;(function(window, $, undefined) {
 
     'use strict';
 
@@ -112,15 +112,13 @@
      * @param type workbook type, XLS or XLSX
      * @param sheetName sheet name
      */
-    function saveExcel(sheetName) {
+    function saveExcel() {
 
         var data = this.config.data,
             nameWithType = this.config.fileName.split('.'),
             name = nameWithType[0],
-            type = nameWithType[1];
-
-
-        if (!sheetName) sheetName = name;
+            type = nameWithType[1],
+            sheetName = this.config.sheetName;
 
         var workbook = new Workbook(),
             worksheet = createWorksheet(data);
@@ -148,7 +146,19 @@
 
     };
 
-    DataTools.prototype.saveExcel = saveExcel;
+    DataTools.prototype.initExcel = function() {
 
-})(window);
+        $(this.config.className).unbind('mouseover');
+        $(this.config.className).unbind('click');
+
+        var _this = this;
+
+        $('body').on('click', this.config.className, function(e) {
+            e.preventDefault();
+            saveExcel.call(_this);
+        });
+
+    };
+
+})(window, jQuery);
 

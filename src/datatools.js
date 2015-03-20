@@ -46,6 +46,7 @@ var DataToolsSupport = {
 
         flashPath: '',
         fileName: '',
+        sheetName: '',
         // class name of the export button or other HTML elements
         className: '.js-export-btn',
         // the parameter 'data' only accept string
