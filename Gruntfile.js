@@ -10,8 +10,8 @@ module.exports = function(grunt) {
             dist: {
                 files: [
                     {src: ['src/datatools.core.js'], dest: 'dist/datatools.core.min.js'},
-                    {src: ['src/xls.support.js'], dest: 'dist/xls.support.min.js'},
-                    {src: ['src/datatools.core.js', 'src/xls.support.js'], dest: 'dist/datatools.xls.min.js'}
+                    {src: ['src/xlsx.support.js'], dest: 'dist/xlsx.support.min.js'},
+                    {src: ['src/datatools.core.js', 'src/xlsx.support.js'], dest: 'dist/datatools.xlsx.min.js'}
                 ]
             }
         }
