@@ -72,7 +72,7 @@
                     if (isPercentage(cell.v)) {
                         cell.t = 'n';
                         var temp = cell.v.substr(0, cell.v.length - 1);
-                        cell.v = Number(temp) / 100 + '%';
+                        cell.v = Number(temp) / 100;
                         cell.z = XLSX.SSF._table[10];
                     }
                 }
@@ -110,9 +110,6 @@
 
     /**
      * save excel into local disk
-     * @param name name of excel
-     * @param type workbook type, XLS or XLSX
-     * @param sheetName sheet name
      */
     function saveExcel() {
 
@@ -143,7 +140,7 @@
         saveAs(new Blob([buf],
                    {
                        type: 'application/octet-stream'
-                   }), nameWithType);
+                   }), this.config.fileName);
 
     };
 
