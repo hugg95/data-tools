@@ -71,6 +71,8 @@
                     // "0.00%"
                     if (isPercentage(cell.v)) {
                         cell.t = 'n';
+                        var temp = cell.v.substr(0, cell.v.length - 1);
+                        cell.v = temp / 100 + '%';
                         cell.z = XLSX.SSF._table[10];
                     }
                 }
