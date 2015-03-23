@@ -49,8 +49,8 @@ var DataToolsSupport = {
         sheetName: '',
         // class name of the export button or other HTML elements
         className: '.js-export-btn',
-        // the parameter 'data' only accept string
-        data: ''
+        // the parameter 'text' only accept string
+        text: ''
 
     };
 
@@ -170,7 +170,7 @@ var DataToolsSupport = {
 
             if (flash) {
                 flash.setFileName(this.config.fileName);
-                flash.setData(this.config.data);
+                flash.setData(this.config.text);
             }
         }
     };
