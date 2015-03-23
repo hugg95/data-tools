@@ -1,5 +1,6 @@
 /**
- * DataTools provides export capability.
+ * DataTools provides abaility to export data as plain text document or
+ * Microsoft XLSX document.
  * @author victor li
  * @date 2015/03/04
  * @version 0.0.1

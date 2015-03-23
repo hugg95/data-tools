@@ -1,6 +1,6 @@
 {
   "name": "datatools.js",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "DataTools provides ability to export data to CSV or Microsoft Excel document.",
   "main": "src/datatools.core.js",
   "dependencies": {

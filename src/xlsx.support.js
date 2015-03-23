@@ -1,5 +1,5 @@
 /**
- * add abaility on DataTools to export Microsoft XLS/XLSX document.
+ * add abaility on DataTools to export Microsoft XLSX document.
  * @author victor li
  * @date 2015/03/18
  * @version 0.0.1
