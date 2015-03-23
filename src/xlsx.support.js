@@ -72,7 +72,7 @@
                     if (isPercentage(cell.v)) {
                         cell.t = 'n';
                         var temp = cell.v.substr(0, cell.v.length - 1);
-                        cell.v = temp / 100 + '%';
+                        cell.v = Number(temp) / 100 + '%';
                         cell.z = XLSX.SSF._table[10];
                     }
                 }
@@ -119,7 +119,6 @@
         var data = this.config.data,
             nameWithType = this.config.fileName.split('.'),
             name = nameWithType[0],
-            type = nameWithType[1],
             sheetName = this.config.sheetName;
 
         var workbook = new Workbook(),
@@ -130,7 +129,7 @@
 
         var wbout = XLSX.write(workbook,
                 {
-                    bookType: type,
+                    bookType: 'xlsx',
                     bookSST: true,
                     type: 'binary'
                 });
@@ -144,7 +143,7 @@
         saveAs(new Blob([buf],
                    {
                        type: 'application/octet-stream'
-                   }), name + '.' + type);
+                   }), nameWithType);
 
     };
 
