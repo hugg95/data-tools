@@ -144,6 +144,8 @@
 
     };
 
+    DataTools.prototype.saveExcel = saveExcel;
+
     DataTools.prototype.initExcel = function() {
 
         $(this.config.className).unbind('mouseover');
